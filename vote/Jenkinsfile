@@ -24,6 +24,7 @@ pipeline {
                 {
                     sh "nosetests -v"
                 }
+                echo "${GIT_BRANCH}"
             }
         }
     }
