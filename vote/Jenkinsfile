@@ -6,12 +6,6 @@ pipeline {
         }
     }
     stages {
-        stage('Checkout'){
-            steps {
-                echo "Checkout"
-                git 'https://github.com/LeonardoSDourado/example-voting-app.git'
-            }
-        }
         stage('Install')
         {
             steps {
