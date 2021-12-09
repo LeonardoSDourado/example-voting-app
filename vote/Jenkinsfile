@@ -1,0 +1,38 @@
+pipeline {
+    agent {
+        docker {
+            image 'python:2.7.18-alpine3.11'
+            label 'docker'
+        }
+    }
+    stages {
+        stage('Checkout'){
+            steps {
+                echo "Checkout"
+                git 'https://github.com/LeonardoSDourado/example-voting-app.git'
+            }
+        }
+        stage('Install')
+        {
+            steps {
+                echo "Install"
+                dir('vote')
+                {
+                    sh "pip install -r requirements.txt"
+                }              
+            }
+        }
+        stage('Tests')
+        {
+            steps {
+                echo "Tests"
+                dir('vote')
+                {
+                    sh "nosetests -v"
+                }
+            }
+        }
+    }
+    
+    
+}
