@@ -20,6 +20,7 @@ pipeline {
         }
         stage('Tests')
         {
+            when { changeset "vote/tests/*.*" }
             steps {
                 echo "Tests"
                 dir('vote')
