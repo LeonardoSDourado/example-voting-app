@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Install')
         {
-            when { changeset "vote/tests/*.*" }
+            when { changeset "vote/**" }
             steps {
                 echo "Install"
                 dir('vote')
@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Tests')
         {
-            when { changeset "vote/tests/*.*" }
+            when { changeset "vote/**" }
             steps {
                 echo "Tests"
                 dir('vote')
