@@ -5,6 +5,9 @@ pipeline {
 	
 	stages {
 		stage('Compile') {
+			when { 
+				changeset "**/worker/**" 
+			}
 			agent {
 				docker {
 					label 'docker'
@@ -18,6 +21,9 @@ pipeline {
 			}
 		}
 		stage('Tests') {
+			when { 
+				changeset "**/worker/**" 
+			}
 			agent {
 				docker {
 					label 'docker'
@@ -31,6 +37,9 @@ pipeline {
 			}
 		}
 		stage('Package') {
+			when { 
+				changeset "**/worker/**" 
+			}
 			agent {
 				docker {
 					label 'docker'
@@ -49,4 +58,5 @@ pipeline {
 			echo "Pipeline executed successfully"
 		}
 	}
+
 }
