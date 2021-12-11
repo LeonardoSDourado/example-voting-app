@@ -43,10 +43,10 @@ pipeline {
 				}
 			}
 		}
-		post {
-			success {
-				echo "Pipeline executed successfully"
-			}
+	}
+	post {
+		success {
+			echo "Pipeline executed successfully"
 		}
 	}
 }
