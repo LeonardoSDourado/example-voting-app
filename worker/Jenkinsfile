@@ -15,6 +15,7 @@ pipeline {
 				}
 			}
 			steps {
+				echo "Compiling"
 				dir('worker') {
 					sh "mvn compile"
 				}
@@ -31,6 +32,7 @@ pipeline {
 				}
 			}
 			steps {
+				echo "Testing"
 				dir('worker') {
 					sh "mvn tests"
 				}
@@ -47,6 +49,7 @@ pipeline {
 				}
 			}
 			steps {
+				echo "Packaging"
 				dir('worker') {
 					sh "mvn package -DskipTests"
 				}
