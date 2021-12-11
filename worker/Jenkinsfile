@@ -1,0 +1,52 @@
+pipeline {
+	
+	agent none
+	triggers { pollSCM('H/2 * * * *') }
+	
+	stages {
+		stage('Compile') {
+			agent {
+				docker {
+					label 'docker'
+					image 'maven:3.6.1-jdk-8-alpine'					
+				}
+			}
+			steps {
+				dir('worker') {
+					sh "mvn compile"
+				}
+			}
+		}
+		stage('Tests') {
+			agent {
+				docker {
+					label 'docker'
+					image 'maven:3.6.1-jdk-8-alpine'					
+				}
+			}
+			steps {
+				dir('worker') {
+					sh "mvn tests"
+				}
+			}
+		}
+		stage('Package') {
+			agent {
+				docker {
+					label 'docker'
+					image 'maven:3.6.1-jdk-8-alpine'					
+				}
+			}
+			steps {
+				dir('worker') {
+					sh "mvn package -DskipTests"
+				}
+			}
+		}
+		post {
+			success {
+				echo "Pipeline executed successfully"
+			}
+		}
+	}
+}
