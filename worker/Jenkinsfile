@@ -34,7 +34,7 @@ pipeline {
 			steps {
 				echo "Testing"
 				dir('worker') {
-					sh "mvn tests"
+					sh "mvn test"
 				}
 			}
 		}
