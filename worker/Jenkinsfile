@@ -67,7 +67,7 @@ pipeline {
 				echo "Packaging into Docker"
 				script {
 					docker.withRegistry('https://192-168-18-58.nip.io/repository/docker/', 'nexus-registry') {
-						def customImage = docker.build("instavote-worker:${env.BUILD_ID}", "./worker")
+						def customImage = docker.build("repository/docker/instavote-worker:${env.BUILD_ID}", "./worker")
 						customImage.push()
 						customImage.push("${GIT_BRANCH}")
 					}
