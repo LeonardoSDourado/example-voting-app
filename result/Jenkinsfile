@@ -1,0 +1,50 @@
+pipeline {
+	
+	agent none
+	triggers { pollSCM('H/2 * * * *') }
+	
+	stages {
+		stage('Install') {
+			when { 
+				changeset "result/**" 
+			}
+			agent {
+				docker {
+					label 'docker'
+					image 'node:8.16.0-alpine'					
+				}
+			}
+			steps {
+				echo "Installing"
+				dir('result') {
+					sh "npm install && npm audit fix"
+				}
+			}
+		}
+		stage('Package-docker') {
+			when {
+				branch 'master'
+				changeset "result/**"
+			}
+			agent {
+				label 'docker'
+			}
+			steps {
+				echo "Packaging into Docker"
+				script {
+					docker.withRegistry('https://192-168-18-58.nip.io/repository/docker/', 'nexus-registry') {
+						def customImage = docker.build("repository/docker/instavote-result:${env.BUILD_ID}", "./result")
+						customImage.push()
+						customImage.push("${GIT_BRANCH}")
+					}
+				}
+			}
+		}
+	}
+	post {
+		success {
+			echo "Pipeline executed successfully"
+		}
+	}
+
+}
