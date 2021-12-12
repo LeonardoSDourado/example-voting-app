@@ -5,9 +5,6 @@ pipeline {
 	
 	stages {
 		stage('Install') {
-			when { 
-				changeset "vote/**" 
-			}
 			agent {
 				docker {
 					label 'docker'
@@ -22,9 +19,6 @@ pipeline {
 			}
 		}
 		stage('Tests') {
-			when { 
-				changeset "vote/**" 
-			}
 			agent {
 				docker {
 					label 'docker'
@@ -39,10 +33,6 @@ pipeline {
 			}
 		}
 		stage('Package-docker') {
-			when {
-				branch 'master'
-				changeset "vote/**"
-			}
 			agent {
 				label 'docker'
 			}
