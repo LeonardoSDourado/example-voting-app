@@ -5,9 +5,6 @@ pipeline {
 	
 	stages {
 		stage('Install') {
-			when { 
-				changeset "result/**" 
-			}
 			agent {
 				docker {
 					label 'docker'
@@ -24,7 +21,6 @@ pipeline {
 		stage('Package-docker') {
 			when {
 				branch 'master'
-				changeset "result/**"
 			}
 			agent {
 				label 'docker'
